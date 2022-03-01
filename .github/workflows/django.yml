@@ -35,8 +35,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # 之前GitHub添加的Token
       with:
-        #tag_name: ${{ github.ref }} # (tag)标签名称
-        tag_name: 0.1.4 # (tag)标签名称
+        tag_name: ${{ github.ref }} # (tag)标签名称
+        #tag_name: 0.1.4 # (tag)标签名称
         release_name: Release ${{ github.ref }}
         draft: false # 是否是草稿
         prerelease: false # 是否是预发布
