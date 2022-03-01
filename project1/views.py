@@ -2,4 +2,4 @@ from django.http import HttpResponse
 
 
 def testview(request):
-    return HttpResponse('FIRSTgit fad ，versions 0.1.3')
+    return HttpResponse('FIRSTgit fad123 ，versions 0.1.3')
