@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: django1
+spec:
+  containers:
+  - name: django1
+    image: davidzhu/django-test1:v0.1.9
