@@ -1,12 +1,31 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: django-test1
+  # 选择部署在哪个namespace
   namespace: firstproject1
 spec:
-  containers:
-  - name: django-test1
-    image: registry.cn-shanghai.aliyuncs.com/davidzhu/django-test1:v0.1.9
-    command: ["python", "manage.py", "runserver"]
-  imagePullSecrets:
-  - name: docker-hub-aliyun  
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-test1
+  template:
+    metadata:
+      labels:
+        app: django-test1
+    spec:
+      containers:
+      # 指定容器名字和镜像地址
+      - name: django-test1
+        image: registry.cn-shanghai.aliyuncs.com/davidzhu/django-test1:v0.1.9
+        command: ["sh", "-c"]
+        # 启动容器时候启动的命令
+        args:
+          - python manage.py runserver
+        # 对外暴漏的端口
+        ports:
+        - containerPort: 8000
+      
+      # 阿里云镜像仓库的用户名和密码
+      imagePullSecrets:
+      - name: docker-hub-aliyun  
