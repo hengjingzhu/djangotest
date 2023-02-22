@@ -29,3 +29,25 @@ spec:
       # 阿里云镜像仓库的用户名和密码
       imagePullSecrets:
       - name: docker-hub-aliyun  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-service
+  # 选择部署在哪个namespace
+  namespace: firstproject1
+spec:
+  selector:
+    app: django-test1
+  
+  # type: ClusterIP   # 明确指定为 ClusterIP 类型
+  type: NodePort
+  ports:
+    - name:  django-service
+      # service 的端口
+      port: 8000
+      # 要访问的容器的端口
+      targetPort: 8000
+      # 对外暴漏的nodeport，可以供外部访问,如果是 clusterIP 的话就不需要
+      nodePort: 30000
