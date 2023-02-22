@@ -2,7 +2,10 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: django-test1
+  namespace: firstproject1
 spec:
   containers:
   - name: django-test1
     image: davidzhu/django-test1:v0.1.9
+  imagePullSecrets:
+  - name: docker-hub-aliyun  
