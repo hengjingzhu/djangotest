@@ -21,7 +21,7 @@ spec:
         command: ["sh", "-c"]
         # 启动容器时候启动的命令
         args:
-          - python manage.py runserver
+          - python manage.py runserver 0.0.0.0:8000
         # 对外暴漏的端口
         ports:
         - containerPort: 8000
