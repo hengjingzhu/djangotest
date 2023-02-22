@@ -50,4 +50,4 @@ spec:
       # 要访问的容器的端口
       targetPort: 8000
       # 对外暴漏的nodeport，可以供外部访问,如果是 clusterIP 的话就不需要
-      nodePort: 30001
+      nodePort: 32323
