@@ -7,5 +7,6 @@ spec:
   containers:
   - name: django-test1
     image: registry.cn-shanghai.aliyuncs.com/davidzhu/django-test1:v0.1.9
+    command: ["python", "manage.py", "runserver"]
   imagePullSecrets:
   - name: docker-hub-aliyun  
