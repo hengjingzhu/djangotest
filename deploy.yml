@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
   - name: django-test1
-    image: davidzhu/django-test1:v0.1.9
+    image: registry.cn-shanghai.aliyuncs.com/davidzhu/django-test1:v0.1.9
   imagePullSecrets:
   - name: docker-hub-aliyun  
