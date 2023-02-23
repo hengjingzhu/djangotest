@@ -40,9 +40,10 @@ metadata:
 spec:
   selector:
     app: django-test1
-  
-  # type: ClusterIP   # 明确指定为 ClusterIP 类型
-  type: NodePort
+    
+  # 明确指定为 ClusterIP 类型
+  type: ClusterIP
+  #type: NodePort
   ports:
     - name:  django-service
       # service 的端口
@@ -50,4 +51,20 @@ spec:
       # 要访问的容器的端口
       targetPort: 8000
       # 对外暴漏的nodeport，可以供外部访问,如果是 clusterIP 的话就不需要
-      nodePort: 32323
+      # nodePort: 32323
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: django-ingress
+  # 选择部署在哪个namespace
+  namespace: firstproject1
+spec:
+  rules:
+  - host: "example.ingredemo.com"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: django-service
+          servicePort: 8000
