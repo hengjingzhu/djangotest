@@ -46,13 +46,13 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}
 
-    - name: Deploy to Alibaba Cloud ECS
-      uses: AlibabaCloudGithub/actions-deploy-ecs@v1.0.0
-      with:
-        region: ${{ env.REGION }}
-        access_key_id: ${{ env.ACCESS_KEY_ID }}
-        access_key_secret: ${{ env.ACCESS_KEY_SECRET }}
-        ecs_cluster_id: ${{ env.ECS_CLUSTER_ID }}
-        ecs_task_name: ${{ env.ECS_TASK_NAME }}
-        image_name: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-        command: python manage.py runserver
+#     - name: Deploy to Alibaba Cloud ECS
+#       uses: AlibabaCloudGithub/actions-deploy-ecs@v1.0.0
+#       with:
+#         region: ${{ env.REGION }}
+#         access_key_id: ${{ env.ACCESS_KEY_ID }}
+#         access_key_secret: ${{ env.ACCESS_KEY_SECRET }}
+#         ecs_cluster_id: ${{ env.ECS_CLUSTER_ID }}
+#         ecs_task_name: ${{ env.ECS_TASK_NAME }}
+#         image_name: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+#         command: python manage.py runserver
