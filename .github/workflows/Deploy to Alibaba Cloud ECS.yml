@@ -1,0 +1,57 @@
+name: Deploy to Alibaba Cloud ECS
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  IMAGE_NAME: <your-image-name>
+  IMAGE_TAG: <your-image-tag>
+  REGION: <your-region>
+  ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY }}
+  ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_SECRET_KEY }}
+  ECS_CLUSTER_ID: <your-ecs-cluster-id>
+  ECS_TASK_NAME: <your-ecs-task-name>
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure Docker
+      uses: docker/login-action@v1
+      with:
+        registry: registry.${{ env.REGION }}.aliyuncs.com
+        username: ${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }}
+        password: ${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}
+
+    - name: Install Python dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install python3-pip
+        pip3 install -r requirements.txt
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: Dockerfile
+        push: true
+        tags: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+      env:
+        DOCKER_USERNAME: ${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}
+
+    - name: Deploy to Alibaba Cloud ECS
+      uses: AlibabaCloudGithub/actions-deploy-ecs@v1.0.0
+      with:
+        region: ${{ env.REGION }}
+        access_key_id: ${{ env.ACCESS_KEY_ID }}
+        access_key_secret: ${{ env.ACCESS_KEY_SECRET }}
+        ecs_cluster_id: ${{ env.ECS_CLUSTER_ID }}
+        ecs_task_name: ${{ env.ECS_TASK_NAME }}
+        image_name: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+        command: python manage.py runserver
