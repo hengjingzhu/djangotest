@@ -59,7 +59,7 @@ jobs:
         REMOTE_USER: ${{ env.ACCESS_KEY_ID }}
         # Remote port
         # Source directory, path relative to `$GITHUB_WORKSPACE` root, eg: `dist/`
-        SOURCE: "./dist" # optional, default is 
+        # SOURCE: "./dist" # optional, default is 
         # Target directory
         TARGET:  "/opt"
         # Arguments to pass to rsync
