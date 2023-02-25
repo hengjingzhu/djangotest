@@ -46,6 +46,25 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}
 
+    - name: ssh deploy
+      # You may pin to the exact commit or the version.
+      # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
+      uses: easingthemes/ssh-deploy@v4.1.8
+      with:
+        # Private key part of an SSH key pair
+        SSH_PRIVATE_KEY: ${{ env.ACCESS_KEY_SECRET }}
+        # Remote host
+        REMOTE_HOST: ${{ env.ECS_CLUSTER_ID }}
+        # Remote user
+        REMOTE_USER: ${{ env.ACCESS_KEY_ID }}
+        # Remote port
+        # Source directory, path relative to `$GITHUB_WORKSPACE` root, eg: `dist/`
+        SOURCE: ./dist # optional, default is 
+        # Target directory
+        TARGET:  "/opt"
+        # Arguments to pass to rsync
+        
+        
 #     - name: Deploy to Alibaba Cloud ECS
 #       uses: AlibabaCloudGithub/actions-deploy-ecs@v1.0.0
 #       with:
