@@ -67,6 +67,6 @@ jobs:
           whoami
           ls -al
           echo $RSYNC_STDOUT
-          echo "djangotest1" > test1.txt
+          echo "djangotest1" > /opt/djangotest1/test1.txt
         
         
