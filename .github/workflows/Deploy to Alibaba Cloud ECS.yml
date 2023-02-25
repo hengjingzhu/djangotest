@@ -64,6 +64,6 @@ jobs:
         TARGET:  "/opt/djangotest1"
         # Arguments to pass to rsync
         run: |
-          python manage.py runserver
+          echo 'djangotest' > test1.txt
         
         
