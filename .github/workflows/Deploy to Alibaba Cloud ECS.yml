@@ -51,7 +51,7 @@ jobs:
       # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
       uses: easingthemes/ssh-deploy@v4.1.8
       with:
-        # Private key part of an SSH key pair
+        # Private key part of an SSH key pair,ssh 连接密钥
         SSH_PRIVATE_KEY: ${{ env.ACCESS_KEY_SECRET }}
         # Remote host
         REMOTE_HOST: ${{ env.ECS_CLUSTER_ID }}
