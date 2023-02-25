@@ -63,7 +63,10 @@ jobs:
         # Target directory,把当前的项目代码目标拷贝到Target目录
         TARGET:  "/opt/djangotest1"
         # Arguments to pass to rsync
-        run: |
-          echo 'djangotest' > test1.txt
+        SCRIPT_AFTER: |
+          whoami
+          ls -al
+          echo $RSYNC_STDOUT
+          echo "djangotest1" > test1.txt
         
         
