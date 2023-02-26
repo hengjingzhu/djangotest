@@ -87,9 +87,9 @@ jobs:
         # SOURCE: "./dist" # optional, default is 
         # Target directory,把当前的项目代码目标拷贝到Target目录
         TARGET:  "/opt/djangotest1"
-        SCRIPT_BEFORE: |
-          DOCKER_IMAGE=registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
         # Arguments to pass to rsync
+       
+        DOCKER_IMAGE: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
         SCRIPT_AFTER: | 
           docker-compose down
           docker-compose up -d
