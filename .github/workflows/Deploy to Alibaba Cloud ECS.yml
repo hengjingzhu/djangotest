@@ -95,8 +95,8 @@ jobs:
           echo 'test1' > /opt/djangotest1/text1.txt
           sed -i "s|image:.*|image: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}|" /opt/djangotest1/docker-compose.yml
           echo 'test2' > /opt/djangotest1/text2.txt
-          /opt/djangotest1/docker-compose down
+          docker-compose -f /opt/djangotest1/docker-compose.yml down
           docker image prune -f --filter "dangling=true"
-          /opt/djangotest1/docker-compose up -d
+          docker-compose -f /opt/djangotest1/docker-compose.yml up -d
         
         
