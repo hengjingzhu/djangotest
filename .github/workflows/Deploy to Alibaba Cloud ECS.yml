@@ -13,7 +13,6 @@ env:
   ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY }}
   ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_SECRET_KEY }}
   ECS_CLUSTER_ID: 47.100.18.252
-  DOCKER_IMAGE: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
 jobs:
   deploy:
@@ -90,6 +89,7 @@ jobs:
         TARGET:  "/opt/djangotest1"
         # Arguments to pass to rsync
         SCRIPT_AFTER: |
+          DOCKER_IMAGE=registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
           docker-compose down
           docker-compose up -d
         
