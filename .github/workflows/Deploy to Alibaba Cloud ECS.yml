@@ -70,6 +70,7 @@ jobs:
         SCRIPT_AFTER: |
           docker login --username=${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }} registry.${{ env.REGION }}.aliyuncs.com --password=${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}           
           docker pull registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          rm -f /opt/djangotest1/local_ssh_script-after.sh
 
     - name: ssh deploy
       # You may pin to the exact commit or the version.
@@ -93,8 +94,8 @@ jobs:
           echo 'test1' > /opt/djangotest1/text1.txt
           sed -i "s|image:.*|image: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}|" /opt/djangotest1/docker-compose.yml
           echo 'test2' > /opt/djangotest1/text2.txt
-          docker-compose down
-          docker rmi ${{ env.IMAGE_NAME }}
-          docker-compose up -d
+          /opt/djangotest1/docker-compose down
+          docker image prune -f --filter "dangling=true"
+          /opt/djangotest1/docker-compose up -d
         
         
