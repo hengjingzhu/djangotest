@@ -55,22 +55,21 @@ jobs:
     
     
     # SSH into server and pull Docker image
-    - name: pull image from alicontainerhub
-      # You may pin to the exact commit or the version.
-      # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
-      uses: easingthemes/ssh-deploy@v4.1.8
-      with:
-        # Private key part of an SSH key pair,ssh 连接密钥
-        SSH_PRIVATE_KEY: ${{ env.ACCESS_KEY_SECRET }}
-        # Remote host
-        REMOTE_HOST: ${{ env.ECS_CLUSTER_ID }}
-        # Remote user
-        REMOTE_USER: ${{ env.ACCESS_KEY_ID }}
+#     - name: pull image from alicontainerhub
+#       # You may pin to the exact commit or the version.
+#       # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
+#       uses: easingthemes/ssh-deploy@v4.1.8
+#       with:
+#         # Private key part of an SSH key pair,ssh 连接密钥
+#         SSH_PRIVATE_KEY: ${{ env.ACCESS_KEY_SECRET }}
+#         # Remote host
+#         REMOTE_HOST: ${{ env.ECS_CLUSTER_ID }}
+#         # Remote user
+#         REMOTE_USER: ${{ env.ACCESS_KEY_ID }}
        
-        SCRIPT_AFTER: |
-          docker login --username=${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }} registry.${{ env.REGION }}.aliyuncs.com --password=${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}           
-          docker pull registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          rm -f /opt/djangotest1/local_ssh_script-after.sh
+#         SCRIPT_AFTER: |
+#           docker login --username=${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }} registry.${{ env.REGION }}.aliyuncs.com --password=${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}           
+#           docker pull registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
     - name: ssh deploy
       # You may pin to the exact commit or the version.
@@ -90,7 +89,9 @@ jobs:
         TARGET:  "/opt/djangotest1"
         # Arguments to pass to rsync
        
-        SCRIPT_AFTER: | 
+        SCRIPT_AFTER: |
+          docker login --username=${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }} registry.${{ env.REGION }}.aliyuncs.com --password=${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}           
+          docker pull registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           echo 'test1' > /opt/djangotest1/text1.txt
           sed -i "s|image:.*|image: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}|" /opt/djangotest1/docker-compose.yml
           echo 'test2' > /opt/djangotest1/text2.txt
