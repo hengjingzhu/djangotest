@@ -13,6 +13,7 @@ env:
   ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY }}
   ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_SECRET_KEY }}
   ECS_CLUSTER_ID: 47.100.18.252
+  DOCKER_IMAGE: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
 jobs:
   deploy:
@@ -55,7 +56,7 @@ jobs:
     
     
     # SSH into server and pull Docker image
-    - name: ssh deploy
+    - name: pull image from alicontainerhub
       # You may pin to the exact commit or the version.
       # uses: easingthemes/ssh-deploy@3884c8554ff45c0fd37d3f12a76288d06ce7a2ff
       uses: easingthemes/ssh-deploy@v4.1.8
@@ -68,7 +69,7 @@ jobs:
         REMOTE_USER: ${{ env.ACCESS_KEY_ID }}
        
         SCRIPT_AFTER: |
-          docker login --username=${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }} registry.${{ env.REGION }}.aliyuncs.com --password=${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}
+          docker login --username=${{ secrets.ALIYUN_CONTAINER_REGISTRY_USERNAME }} registry.${{ env.REGION }}.aliyuncs.com --password=${{ secrets.ALIYUN_CONTAINER_REGISTRY_PASSWORD }}           
           docker pull registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
     - name: ssh deploy
@@ -89,9 +90,7 @@ jobs:
         TARGET:  "/opt/djangotest1"
         # Arguments to pass to rsync
         SCRIPT_AFTER: |
-          whoami
-          ls -al
-          echo $RSYNC_STDOUT
-          echo "djangotest1" > /opt/djangotest1/test2.txt
+          docker-compose down
+          docker-compose up -d
         
         
