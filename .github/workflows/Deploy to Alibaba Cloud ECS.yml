@@ -90,9 +90,11 @@ jobs:
         # Arguments to pass to rsync
        
         SCRIPT_AFTER: | 
-          sed -i "s|image:.*|image:registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}|" /opt/djangotest1/docker-compose.yml
+          echo 'test1' > /opt/djangotest1/text1.txt
+          sed -i "s|image:.*|image: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}|" /opt/djangotest1/docker-compose.yml
+          echo 'test2' > /opt/djangotest1/text2.txt
           docker-compose down
-          docker rmi ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          docker rmi ${{ env.IMAGE_NAME }}
           docker-compose up -d
         
         
