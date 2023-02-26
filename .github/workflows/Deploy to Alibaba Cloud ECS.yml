@@ -89,8 +89,8 @@ jobs:
         TARGET:  "/opt/djangotest1"
         # Arguments to pass to rsync
        
-        DOCKER_IMAGE: registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
         SCRIPT_AFTER: | 
+          sed -i "s|image:.*|image:registry.${{ env.REGION }}.aliyuncs.com/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}|" /opt/djangotest1/docker-compose.yml
           docker-compose down
           docker-compose up -d
         
