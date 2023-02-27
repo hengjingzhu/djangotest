@@ -14,4 +14,4 @@ COPY . /djangotest
 WORKDIR /djangotest
 
 # 安装 requirements.txt 模块
-RUN pip install -r requirements.txt -i https://pypi.mirrors.ustc.edu.cn/simple/
+RUN pip install -r requirements.txt
