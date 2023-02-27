@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  djangoproject1:
+
+    image: DOCKER_IMAGE
+    command: python manage.py runserver 0.0.0.0:8000
+    #command: uwsgi --ini uwsgi.ini
+    #command: uwsgi --http :8000 --module myobject.wsgi --py-autoreload=1
+    #volumes:
+    #  - /djangoproject/myobject:/myobject
+    ports:
+      - "8005:8000"
+    restart: always
